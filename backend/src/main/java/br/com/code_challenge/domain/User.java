@@ -30,22 +30,21 @@ public class User implements Serializable {
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department department;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "function_id", referencedColumnName = "id")
     private Function function;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "password_id", referencedColumnName = "id")
-    private Password password;
+    @Column
+    private String password;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Role role;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "marital_status_id", referencedColumnName = "id")
     private MaritalStatus maritalStatus;
 

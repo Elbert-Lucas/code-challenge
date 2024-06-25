@@ -12,16 +12,20 @@ import jakarta.persistence.Transient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+
 @Service
 public class UserService {
 
-    UserRepository userRepository;
-    RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final EmailService emailService;
 
     @Autowired
-    public void UserService(UserRepository userRepository, RoleRepository roleRepository){
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, EmailService emailService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.emailService = emailService;
     }
 
     @Transient
@@ -29,6 +33,7 @@ public class UserService {
         User user = dto.toEntity();
         user.setRole(roleRepository.findByRole(UserRole.BASIC).get());
         userRepository.save(user);
+        emailService.sendEmail(user.getEmail(), user.getName().split(" ")[0]);
         return new CreatedMessageResponseDTO("Usuário criado com sucesso");
     }
 }

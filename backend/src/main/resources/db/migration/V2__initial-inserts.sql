@@ -1,4 +1,4 @@
-INSERT INTO tb_marital_status(status, description) VALUES
+INSERT INTO TB_MARITAL_STATUS(status, description) VALUES
 ('SINGLE', 'Solteiro(a)'),
 ('MARRIED', 'Casado(a)'),
 ('DIVORCED', 'Divorciado(a)'),
@@ -6,6 +6,6 @@ INSERT INTO tb_marital_status(status, description) VALUES
 ('COHABITATION', 'União estavel'),
 ('OTHER', 'Outro');
 
-INSERT INTO tb_role(role, description) VALUES
+INSERT INTO TB_ROLE(role, description) VALUES
 ('ADMIN', 'Usuário com todas as permissões'),
 ('BASIC', 'Usuário com permissões basicas');

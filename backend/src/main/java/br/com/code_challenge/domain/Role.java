@@ -16,7 +16,7 @@ public class Role {
 
     @Column
     @Enumerated(value = EnumType.STRING)
-    private UserRole role = UserRole.BASIC;
+    private UserRole role;
 
     @Column
     private String description;

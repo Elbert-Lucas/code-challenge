@@ -1,6 +1,7 @@
 package br.com.code_challenge.domain;
 
 import br.com.code_challenge.converter.PasswordEncryptConverter;
+import br.com.code_challenge.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -61,5 +62,8 @@ public class User implements Serializable {
     @Column(name = "birth_dt", columnDefinition = "DATE")
     private Date birth;
 
+    @Column
+    @Enumerated(value = EnumType.STRING)
+    private UserStatus status;
 
 }

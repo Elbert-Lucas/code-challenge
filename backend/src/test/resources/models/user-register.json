@@ -1,0 +1,28 @@
+{
+  "name": "João da Silva",
+  "birth": "1990-05-15",
+  "email": "joao.silva@example.com",
+  "phone": "5511999999999",
+  "address": {
+    "address": "Rua das Flores",
+    "city": "São Paulo",
+    "state": "SP",
+    "country": "Brasil"
+  },
+  "function": {
+    "id": 2,
+    "name": "Analista Financeiro",
+    "description": "Responsável pela análise financeira e relatórios."
+  },
+  "department": {
+    "id": 1,
+    "name": "Finanças",
+    "description": "Responsável pela gestão financeira e relatórios."
+  },
+  "marital-status": {
+    "id": 2,
+    "status": "MARRIED",
+    "description": "Casado(a)"
+  },
+  "hiringDate": "2023-01-10"
+}

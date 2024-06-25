@@ -1,5 +1,5 @@
 ALTER TABLE TB_USER
-DROP CONSTRAINT tb_user_password_id_fkey;
+DROP CONSTRAINT tb_user_password_fk;
 
 ALTER TABLE TB_USER
 DROP COLUMN password_id;

@@ -52,11 +52,11 @@ CREATE TABLE TB_USER (
     resignation_dt DATE,
     manager_id INTEGER,
     birth_dt DATE NOT NULL,
-    FOREIGN KEY (address_id) REFERENCES TB_ADDRESS(id),
-    FOREIGN KEY (department_id) REFERENCES TB_DEPARTMENT(id),
-    FOREIGN KEY (function_id) REFERENCES TB_FUNCTION(id),
-    FOREIGN KEY (password_id) REFERENCES TB_PASSWORD(id),
-    FOREIGN KEY (marital_status_id) REFERENCES TB_MARITAL_STATUS(id),
-    FOREIGN KEY (role_id) REFERENCES TB_ROLE(id),
-    FOREIGN KEY (manager_id) REFERENCES TB_USER(id)
+    CONSTRAINT tb_user_address_fk FOREIGN KEY (address_id) REFERENCES TB_ADDRESS(id),
+    CONSTRAINT tb_user_department_fk FOREIGN KEY (department_id) REFERENCES TB_DEPARTMENT(id),
+    CONSTRAINT tb_user_function_fk FOREIGN KEY (function_id) REFERENCES TB_FUNCTION(id),
+    CONSTRAINT tb_user_password_fk FOREIGN KEY (password_id) REFERENCES TB_PASSWORD(id),
+    CONSTRAINT tb_user_marital_status_fk FOREIGN KEY (marital_status_id) REFERENCES TB_MARITAL_STATUS(id),
+    CONSTRAINT tb_user_role_fk FOREIGN KEY (role_id) REFERENCES TB_ROLE(id),
+    CONSTRAINT tb_user_manager_fk FOREIGN KEY (manager_id) REFERENCES TB_USER(id)
 );

@@ -1,9 +1,9 @@
-package br.com.code_challenge.unit.service;
+package br.com.hr_system.unit.service;
 
-import br.com.code_challenge.user.domain.Address;
-import br.com.code_challenge.user.dto.RegisterUserDto;
-import br.com.code_challenge.user.repository.UserRepository;
-import br.com.code_challenge.user.service.UserService;
+import br.com.hr_system.user.domain.Address;
+import br.com.hr_system.user.dto.RegisterUserDto;
+import br.com.hr_system.user.repository.UserRepository;
+import br.com.hr_system.user.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

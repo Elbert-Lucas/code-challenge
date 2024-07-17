@@ -12,7 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 @Getter @Setter
-public class RegisterUserDTO {
+public class RegisterUserDto {
 
     @NotEmpty
     @Size(min = 3, message = "{minimumSize.name}")

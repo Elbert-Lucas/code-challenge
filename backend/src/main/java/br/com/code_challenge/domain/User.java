@@ -7,11 +7,12 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "TB_USER")
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
-@Builder
+@Builder @ToString
 public class User implements Serializable {
 
     @Id
@@ -65,5 +66,14 @@ public class User implements Serializable {
     @Column
     @Enumerated(value = EnumType.STRING)
     private UserStatus status;
+
+    @ManyToMany
+    @JoinTable(name = "TB_NOTIFICATION_USER",
+              joinColumns = @JoinColumn(name = "user_id"),
+              inverseJoinColumns = @JoinColumn(name = "notification_id"))
+    private List<Notification> notifications;
+
+    @OneToMany(mappedBy = "from")
+    private List<Notification> sendNotifications;
 
 }

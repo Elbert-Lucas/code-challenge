@@ -1,6 +1,7 @@
 package br.com.code_challenge.controller;
 
-import br.com.code_challenge.dto.request.RegisterUserDTO;
+import br.com.code_challenge.domain.User;
+import br.com.code_challenge.dto.request.RegisterUserDto;
 import br.com.code_challenge.dto.response.abstracts.MessageResponseDTO;
 import br.com.code_challenge.service.UserService;
 import jakarta.validation.Valid;
@@ -9,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -27,10 +25,15 @@ public class UserController {
     }
 
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MessageResponseDTO> registerUser(@RequestBody @Valid RegisterUserDTO registerUserDTO){
+    public ResponseEntity<MessageResponseDTO> registerUser(@RequestBody @Valid RegisterUserDto registerUserDto){
         log.debug("Iniciando registro de usuario");
-        MessageResponseDTO response = userService.registerUser(registerUserDTO);
+        MessageResponseDTO response = userService.registerUser(registerUserDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> searchUser(@PathVariable(name = "id") Long userId){
+        return new ResponseEntity<>(userService.searchUser(userId), HttpStatus.OK);
     }
 
 }

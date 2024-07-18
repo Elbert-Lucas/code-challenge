@@ -12,14 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public class UserUpdatesService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final UserEmails userEmails;
 
     @Autowired
-    public UserService(UserRepository userRepository, UserMapper userMapper, UserEmails userEmails) {
+    public UserUpdatesService(UserRepository userRepository, UserMapper userMapper, UserEmails userEmails) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.userEmails = userEmails;
@@ -33,8 +33,4 @@ public class UserService {
         return new CreatedMessageResponseDTO("Usuário criado com sucesso");
     }
 
-    private void sendEmailToRegisteredUser(){}
-    public User searchUser(Long userId) {
-        return userRepository.findById(userId).get();
-    }
 }

@@ -19,6 +19,6 @@ public class PasswordEncryptConverter implements AttributeConverter<String, Stri
 
     @Override
     public String convertToEntityAttribute(String password) {
-        return null;
+        return password;
     }
 }

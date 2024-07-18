@@ -3,7 +3,7 @@ package br.com.hr_system.unit.service;
 import br.com.hr_system.user.domain.Address;
 import br.com.hr_system.user.dto.RegisterUserDto;
 import br.com.hr_system.user.repository.UserRepository;
-import br.com.hr_system.user.service.UserService;
+import br.com.hr_system.user.service.UserUpdatesService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -20,10 +20,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class UserServiceUT {
+public class UserUpdatesServiceUT {
 
     @Autowired
-    UserService userService;
+    UserUpdatesService userUpdatesService;
 
     @Autowired
     UserRepository userRepository;
@@ -41,7 +41,7 @@ public class UserServiceUT {
 
     @Test
     void shouldRegisterUserSuccessfully(){
-        assertEquals(HttpStatus.CREATED, userService.registerUser(registerUserDto).getStatus());
+        assertEquals(HttpStatus.CREATED, userUpdatesService.registerUser(registerUserDto).getStatus());
     }
 
     @Test
@@ -49,7 +49,7 @@ public class UserServiceUT {
         String modelsPath = "src/test/resources/models/";
         String registerUserPath = modelsPath + "user-register.json";
         RegisterUserDto duplicateDto =  new ObjectMapper().readValue(new File(registerUserPath), RegisterUserDto.class);
-        assertThrows(DataIntegrityViolationException.class, () -> userService.registerUser(duplicateDto));
+        assertThrows(DataIntegrityViolationException.class, () -> userUpdatesService.registerUser(duplicateDto));
     }
 
     @Test
@@ -57,6 +57,6 @@ public class UserServiceUT {
         registerUserDto.setAddress(new Address());
         registerUserDto.setEmail("Test@test.com");
         registerUserDto.setPhone("999999999999999999999");
-        assertThrows(DataIntegrityViolationException.class, () -> userService.registerUser(registerUserDto));
+        assertThrows(DataIntegrityViolationException.class, () -> userUpdatesService.registerUser(registerUserDto));
     }
 }

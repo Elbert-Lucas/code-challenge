@@ -3,7 +3,7 @@ package br.com.hr_system.user.controller;
 import br.com.hr_system.user.domain.User;
 import br.com.hr_system.user.dto.RegisterUserDto;
 import br.com.hr_system.shared.dto.abstracts.MessageResponseDTO;
-import br.com.hr_system.user.service.UserService;
+import br.com.hr_system.user.service.UserUpdatesService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,23 +17,19 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserService userService;
+    private final UserUpdatesService userUpdatesService;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(UserUpdatesService userUpdatesService) {
+        this.userUpdatesService = userUpdatesService;
     }
 
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MessageResponseDTO> registerUser(@RequestBody @Valid RegisterUserDto registerUserDto){
         log.debug("Iniciando registro de usuario");
-        MessageResponseDTO response = userService.registerUser(registerUserDto);
+        MessageResponseDTO response = userUpdatesService.registerUser(registerUserDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<User> searchUser(@PathVariable(name = "id") Long userId){
-        return new ResponseEntity<>(userService.searchUser(userId), HttpStatus.OK);
-    }
 
 }

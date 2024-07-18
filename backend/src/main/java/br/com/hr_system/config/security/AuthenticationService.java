@@ -1,8 +1,6 @@
 package br.com.hr_system.config.security;
 
 import br.com.hr_system.user.dto.LoggedUserDetailsDto;
-import br.com.hr_system.user.dto.UserBasicDetailsDto;
-import br.com.hr_system.user.repository.UserRepository;
 import br.com.hr_system.user.service.UserDetailsService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -25,14 +23,13 @@ public class AuthenticationService {
         this.userDetailsService = userDetailsService;
     }
 
-    public UsernamePasswordAuthenticationToken authenticate(String jwt){
-        log.debug("Autenticando usuario");
+    public UsernamePasswordAuthenticationToken authenticate(String jwt, boolean isRegister){
+        log.debug("Autenticando usuario ");
         LoggedUserDetailsDto user = userDetailsService.findUserByToken(jwt);
 
-        jwtUtil.validateToken(jwt, user);
-
+        if(!isRegister) jwtUtil.validateToken(jwt, user);
+        else jwtUtil.validateRegisterToken(jwt, user);
         log.debug("Usuario autenticado");
-
         saveUserOnRequestContext(user);
         return new UsernamePasswordAuthenticationToken(
                 user,

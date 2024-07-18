@@ -32,12 +32,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
+        boolean isRegister = false;
+        String jwt;
 
-        String authHeader = request.getHeader("Authorization");
+        if(request.getRequestURI().contains("/user/change-password") && request.getHeader("email-auth") != null){
+            jwt = request.getHeader("email-auth");
+            isRegister = true;
+        }else jwt = request.getHeader("Authorization").substring(7);
 
         try {
-            final String jwt = authHeader.substring(7);
-            UsernamePasswordAuthenticationToken authentication = authenticationService.authenticate(jwt);
+            UsernamePasswordAuthenticationToken authentication = authenticationService.authenticate(jwt, isRegister);
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             filterChain.doFilter(request, response);

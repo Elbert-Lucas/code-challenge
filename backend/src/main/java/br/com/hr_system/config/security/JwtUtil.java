@@ -2,6 +2,7 @@ package br.com.hr_system.config.security;
 
 import br.com.hr_system.config.security.exception.InvalidTokenException;
 import br.com.hr_system.user.dto.LoggedUserDetailsDto;
+import br.com.hr_system.user.dto.UserBasicDetailsDto;
 import br.com.hr_system.user.enums.UserStatus;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -21,10 +22,16 @@ public class JwtUtil {
     @Value("${jwt.secret}")
     private String secret;
     private static final long USER_EXPIRATION_TIME = 1000L * 60 * 15; // 15 minutes
-    private static final long REFRESH_EXPIRATION_TIME = 1000L * 60 * 60 * 24 * 30; // 30 days
+    private static final long REFRESH_EXPIRATION_TIME = 1000L * 60 * 60 * 24 * 15; // 15 days
+    private static final long REGISTER_EXPIRATION_TIME = 1000L * 60 * 60 * 24 * 30; // 30 days
 
     public Map<String, String> createUserTokens(LoggedUserDetailsDto user){
         return createUserTokens(user, createRefreshJwt(user));
+    }
+    public String createRegisterPasswordToken(UserBasicDetailsDto user){
+        return createJwt(String.valueOf(user.getId()),
+                createRegisterClaims(user),
+                USER_EXPIRATION_TIME);
     }
 
     private Map<String, String> createUserTokens(LoggedUserDetailsDto user, String refreshToken){
@@ -36,7 +43,7 @@ public class JwtUtil {
     private String createJwtToken(LoggedUserDetailsDto user){
         return createJwt(String.valueOf(user.getId()),
                          createJwtClaims(user),
-                         USER_EXPIRATION_TIME);
+                         REGISTER_EXPIRATION_TIME);
     }
     private String createRefreshJwt(LoggedUserDetailsDto user){
         return createJwt(String.valueOf(user.getId()),
@@ -52,14 +59,14 @@ public class JwtUtil {
                 .expiration(new Date(System.currentTimeMillis() + expirationTime))
                 .compact();
     }
-    private Map<String, String> createDefaultClaims(LoggedUserDetailsDto user){
+    private <T extends UserBasicDetailsDto> Map<String, String> createDefaultClaims(T user){
         Map<String, String> claims = new HashMap<>();
         claims.put("name", user.getName());
         claims.put("role", user.getRole());
         return claims;
     }
 
-    private Map<String, String> createJwtClaims(LoggedUserDetailsDto user){
+    private  Map<String, String> createJwtClaims(LoggedUserDetailsDto user){
         Map<String, String> claims = createDefaultClaims(user);
         claims.put("is_refresh", "false");
         return claims;
@@ -69,11 +76,16 @@ public class JwtUtil {
         claims.put("is_refresh", "true");
         return claims;
     }
+    private Map<String, String> createRegisterClaims(UserBasicDetailsDto user){
+        Map<String, String> claims = createDefaultClaims(user);
+        claims.put("is_register", "true");
+        claims.put("email", user.getEmail());
+        return claims;
+    }
     public Map<String, String> refreshToken(String refreshJwt, LoggedUserDetailsDto user){
         validateRefreshToken(refreshJwt, user);
         return createUserTokens(user, refreshJwt);
     }
-
     private boolean defaultIsJwtValid(String jwt, LoggedUserDetailsDto user){
         return  user.getStatus().equals(UserStatus.ACTIVE.name())
                 && isTokenExpired(jwt);
@@ -84,6 +96,11 @@ public class JwtUtil {
     }
     private void validateRefreshToken(String jwt, LoggedUserDetailsDto user){
         if(!(defaultIsJwtValid(jwt, user) && getClaimItem(jwt,"is_refresh").equals("true")))
+            throw new InvalidTokenException();
+    }
+    public void validateRegisterToken(String jwt, LoggedUserDetailsDto user){
+        if(!(user.getStatus().equals(UserStatus.PASSWORD_PENDING.name()) && isTokenExpired(jwt))
+           && getClaimItem(jwt,"is_register").equals("true"))
             throw new InvalidTokenException();
     }
     private Claims getClaims(String jwt){

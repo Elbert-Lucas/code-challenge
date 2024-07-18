@@ -1,9 +1,11 @@
 package br.com.hr_system.user.util;
 
+import br.com.hr_system.config.security.JwtUtil;
 import br.com.hr_system.user.domain.User;
 import br.com.hr_system.shared.service.EmailService;
 import br.com.hr_system.shared.service.EmailService.EmailModel;
 import br.com.hr_system.shared.util.MessagesUtil;
+import br.com.hr_system.user.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +17,16 @@ import java.util.Map;
 public class UserEmails {
 
     private final EmailService emailService;
-
     private final MessagesUtil messages;
+    private final JwtUtil jwtUtil;
+    private final UserMapper userMapper;
 
     @Autowired
-    public UserEmails(EmailService emailService, MessagesUtil messages){
+    public UserEmails(EmailService emailService, MessagesUtil messages, JwtUtil jwtUtil, UserMapper userMapper){
         this.emailService = emailService;
         this.messages = messages;
+        this.jwtUtil = jwtUtil;
+        this.userMapper = userMapper;
     }
 
     public void sendToRegisteredUser(User user) {
@@ -37,6 +42,7 @@ public class UserEmails {
         model.setHtml(true);
         Map<String, String> replaces = new HashMap<>();
         replaces.put("${name}", user.getName().split(" ")[0]);
+        replaces.put("${redirect-link}", jwtUtil.createRegisterPasswordToken(userMapper.entityToBasicDTO(user)));
         String message = manageHtml("src/main/resources/templates/register-user-email.html",replaces);
         model.setMessage(message);
         return model;

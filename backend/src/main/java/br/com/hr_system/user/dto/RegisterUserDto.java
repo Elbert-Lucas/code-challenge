@@ -33,11 +33,9 @@ public class RegisterUserDto {
     @NotNull
     private Address address;
 
-    @JsonProperty("department")
     @NotNull
     private Department department;
 
-    @JsonProperty("function")
     @NotNull
     private Function function;
 

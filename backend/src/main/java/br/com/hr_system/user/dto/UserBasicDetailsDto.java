@@ -9,7 +9,6 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserBasicDetailsDto {
-
     private Integer id;
     private String name;
     private String email;
@@ -19,4 +18,5 @@ public class UserBasicDetailsDto {
     private String manager;
     private Date birth;
     private String status;
+    private String role;
 }

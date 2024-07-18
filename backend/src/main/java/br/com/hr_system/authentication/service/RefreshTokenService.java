@@ -11,14 +11,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RefreshTokenService {
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final UserDetailsService userDetailsService;
+    private final JwtUtil jwtUtil;
 
     @Autowired
-    UserDetailsService userDetailsService;
-
-    @Autowired
-    private JwtUtil jwtUtil;
+    public RefreshTokenService(UserRepository userRepository, UserDetailsService userDetailsService, JwtUtil jwtUtil) {
+        this.userRepository = userRepository;
+        this.userDetailsService = userDetailsService;
+        this.jwtUtil = jwtUtil;
+    }
 
     public CredentialsDto refreshToken(RefreshTokenDTO refreshToken) {
         LoggedUserDetailsDto user = userDetailsService.findUserByToken(refreshToken.getRefreshToken());

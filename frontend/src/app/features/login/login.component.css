@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Allura&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+
+.container{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #FAFAFA;
+}
+
+.bkg-img{
+    border-radius: 50%;
+    position:absolute;
+    background-repeat: no-repeat;
+    margin-top: 3%;
+}
+
+#principal-img{
+    width: 30vw;
+    height: 30vw;
+    background-image: url("../../../assets/principal_circle.jpeg");
+    background-size: cover;
+    background-position: right bottom;
+    left: 5vw;
+    z-index: 3;
+}
+#secundary-img{
+    width: 20vw;
+    height: 20vw;
+    background-image: url("../../../assets/secundary_circle.jpg");
+    background-size: cover;
+    background-position: right bottom;
+    left: 31vw;
+    top: 20vw;
+    z-index: 2;
+}
+#final-img{
+    width: 15vw;
+    height: 15vw;
+    background-image: url("../../../assets/final_circle.jpg");
+    background-size: cover;
+    background-position: -5vw bottom;
+    left: 49vw;
+    top: 12vw;
+    z-index: 1;
+}
+#welcome-text{
+    position: absolute;
+    top: 35%;
+    left: 5vw;
+}
+
+#welcome-text > h1{
+    font-family: "Allura", cursive, 'Trebuchet MS', 'Lucida Sans Unicode';
+    font-size: 104px;
+    color: #2CC0FF;
+}
+#welcome-text > h3{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 26px;
+    opacity: .6;
+}
+#login-card{
+    z-index: 4;
+    width: 435px;
+    float: right;
+    background-color: rgb(255, 255, 255);
+    border: solid 2px rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    align-self: end;
+    margin-block: auto;
+    margin-right: 5vw;
+    display: grid;
+    grid-template-rows: 110px 120px 60px 80px;
+}
+#logo{
+    font-family: "Kaushan Script", cursive;
+    font-size: 60px;
+    color: #2CC0FF;
+    text-align: center;
+    margin-top: 15px;
+    height: 20%;
+}
+#inputs-fields{
+    align-content: center;
+    display: grid;
+}
+.login-input{
+  padding: 13px;
+  width: 80%;
+  font-size: 15px;
+  background-color: #F5F5F5;
+  border: solid 1px rgba(0, 0, 0, 0.20);  
+  border-radius: 5px;
+  margin-bottom: 10px;
+  justify-self: center;
+}
+#login-button{
+  margin-top: 10px;
+  cursor: pointer;
+  height: 40px;
+  width: 85%;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+  border-radius: 8px;
+  justify-self: center;
+  background-color: #2CC0FF;
+}
+#forget-password{
+    text-align: center;
+    font-family:Arial, Helvetica, sans-serif;
+    opacity: .6;
+    cursor: pointer;
+}
+.fadeIn{
+    animation: fadeIn 6s forwards;
+}
+.fadeOut{
+    animation: fadeOut 2s forwards;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+        display: block;
+    }
+}
+
+
+    

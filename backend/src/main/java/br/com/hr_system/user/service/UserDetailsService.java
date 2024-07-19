@@ -3,10 +3,11 @@ package br.com.hr_system.user.service;
 import br.com.hr_system.config.security.JwtUtil;
 import br.com.hr_system.config.security.exception.InvalidTokenException;
 import br.com.hr_system.user.domain.User;
-import br.com.hr_system.user.dto.LoggedUserDetailsDto;
-import br.com.hr_system.user.dto.UserBasicDetailsDto;
+import br.com.hr_system.user.domain.view.LoggedUserDetails;
+import br.com.hr_system.user.domain.view.UserBasicDetails;
+import br.com.hr_system.user.repository.LoggedUserRepository;
+import br.com.hr_system.user.repository.UserDetailsRepository;
 import br.com.hr_system.user.repository.UserRepository;
-import br.com.hr_system.user.repository.UserVanillaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -18,29 +19,31 @@ import java.util.Optional;
 public class UserDetailsService {
 
     private final UserRepository userRepository;
-    private final UserVanillaRepository userVanillaRepository;
+    private final UserDetailsRepository userDetailsRepository;
+    private final LoggedUserRepository loggedUserRepository;
     private final JwtUtil jwtUtil;
 
     @Autowired
-    public UserDetailsService(UserRepository userRepository, UserVanillaRepository userVanillaRepository, JwtUtil jwtUtil) {
+    public UserDetailsService(UserRepository userRepository, LoggedUserRepository loggedUserRepository, UserDetailsRepository userDetailsRepository, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
-        this.userVanillaRepository = userVanillaRepository;
+        this.loggedUserRepository = loggedUserRepository;
+        this.userDetailsRepository = userDetailsRepository;
         this.jwtUtil = jwtUtil;
     }
 
-    public LoggedUserDetailsDto findUserByToken(String token) {
-        return userVanillaRepository.findLoggedUserDetailsById(Long.valueOf(jwtUtil.getClaimItem(token, "sub")))
+    public LoggedUserDetails findUserByToken(String token) {
+        return loggedUserRepository.findById(Long.valueOf(jwtUtil.getClaimItem(token, "sub")))
             .orElseThrow(InvalidTokenException::new);
     }
     User findLoggedUser(){
-        Integer id =((LoggedUserDetailsDto) ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+        Integer id =((LoggedUserDetails) ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
                 .getRequest()
                 .getAttribute("user")).getId();
         return userRepository.findById(Long.valueOf(id)).orElseThrow(RuntimeException::new);
     }
 
-    public UserBasicDetailsDto getUserDetails(Long userId) {
-        return userVanillaRepository.findUserBasicDetails(userId)
+    public UserBasicDetails getUserDetails(Long userId) {
+        return userDetailsRepository.findById(userId)
                 .orElseThrow(RuntimeException::new);
     }
 

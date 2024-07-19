@@ -1,10 +1,9 @@
 package br.com.hr_system.user.mapper;
 
-import br.com.hr_system.user.domain.Function;
 import br.com.hr_system.user.domain.User;
-import br.com.hr_system.user.dto.LoggedUserDetailsDto;
+import br.com.hr_system.user.domain.view.LoggedUserDetails;
+import br.com.hr_system.user.domain.view.UserBasicDetails;
 import br.com.hr_system.user.dto.RegisterUserDto;
-import br.com.hr_system.user.dto.UserBasicDetailsDto;
 import br.com.hr_system.user.enums.UserRole;
 import br.com.hr_system.user.enums.UserStatus;
 import br.com.hr_system.user.repository.RoleRepository;
@@ -26,15 +25,15 @@ public class UserMapper {
         user.setRole(roleRepository.findByRole(UserRole.BASIC).get());
         return user;
     }
-    public UserBasicDetailsDto entityToBasicDTO(User entity){
-        UserBasicDetailsDto dto = new ModelMapper().map(entity, UserBasicDetailsDto.class);
+    public UserBasicDetails entityToBasicDTO(User entity){
+        UserBasicDetails dto = new ModelMapper().map(entity, UserBasicDetails.class);
         dto.setDepartment(entity.getDepartment().getName());
         dto.setFunction(entity.getFunction().getName());
         dto.setPhone(entity.getRole().getRole().name());
         return dto;
     }
-    public LoggedUserDetailsDto entityToLoggedDTO(User entity){
-        LoggedUserDetailsDto dto = new ModelMapper().map(entity, LoggedUserDetailsDto.class);
+    public LoggedUserDetails entityToLoggedDTO(User entity){
+        LoggedUserDetails dto = new ModelMapper().map(entity, LoggedUserDetails.class);
         dto.setRole(entity.getRole().getRole().name());
         dto.setDepartment(entity.getDepartment().getName());
         dto.setDepartment(entity.getFunction().getName());

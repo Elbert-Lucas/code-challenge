@@ -1,6 +1,6 @@
 package br.com.hr_system.config.security;
 
-import br.com.hr_system.user.dto.LoggedUserDetailsDto;
+import br.com.hr_system.user.domain.view.LoggedUserDetails;
 import br.com.hr_system.user.service.UserDetailsService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ public class AuthenticationService {
 
     public UsernamePasswordAuthenticationToken authenticate(String jwt, boolean isRegister){
         log.debug("Autenticando usuario ");
-        LoggedUserDetailsDto user = userDetailsService.findUserByToken(jwt);
+        LoggedUserDetails user = userDetailsService.findUserByToken(jwt);
 
         if(!isRegister) jwtUtil.validateToken(jwt, user);
         else jwtUtil.validateRegisterToken(jwt, user);
@@ -37,7 +37,7 @@ public class AuthenticationService {
             null
         );
     }
-    private void saveUserOnRequestContext(LoggedUserDetailsDto loggedUser){
+    private void saveUserOnRequestContext(LoggedUserDetails loggedUser){
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         request.setAttribute("user", loggedUser);
     }

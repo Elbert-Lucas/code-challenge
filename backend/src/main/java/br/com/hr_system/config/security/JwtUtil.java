@@ -31,7 +31,7 @@ public class JwtUtil {
     public String createRegisterPasswordToken(UserBasicDetails user){
         return createJwt(String.valueOf(user.getId()),
                 createRegisterClaims(user),
-                USER_EXPIRATION_TIME);
+                REGISTER_EXPIRATION_TIME);
     }
 
     private Map<String, String> createUserTokens(LoggedUserDetails user, String refreshToken){
@@ -43,7 +43,7 @@ public class JwtUtil {
     private String createJwtToken(LoggedUserDetails user){
         return createJwt(String.valueOf(user.getId()),
                          createJwtClaims(user),
-                         REGISTER_EXPIRATION_TIME);
+                         USER_EXPIRATION_TIME);
     }
     private String createRefreshJwt(LoggedUserDetails user){
         return createJwt(String.valueOf(user.getId()),

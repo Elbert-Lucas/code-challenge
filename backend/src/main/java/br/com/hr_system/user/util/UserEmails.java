@@ -42,7 +42,7 @@ public class UserEmails {
         model.setHtml(true);
         Map<String, String> replaces = new HashMap<>();
         replaces.put("${name}", user.getName().split(" ")[0]);
-        replaces.put("${redirect-link}", jwtUtil.createRegisterPasswordToken(userMapper.entityToBasicDTO(user)));
+        replaces.put("${redirect-link}", "http://localhost:4200/register-me?auth="+jwtUtil.createRegisterPasswordToken(userMapper.entityToBasicDTO(user)));
         String message = manageHtml("src/main/resources/templates/register-user-email.html",replaces);
         model.setMessage(message);
         return model;

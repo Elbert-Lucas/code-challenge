@@ -35,7 +35,7 @@ public class UserDetailsService {
         return loggedUserRepository.findById(Long.valueOf(jwtUtil.getClaimItem(token, "sub")))
             .orElseThrow(InvalidTokenException::new);
     }
-    User findLoggedUser(){
+    public User findLoggedUser(){
         Integer id =((LoggedUserDetails) ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
                 .getRequest()
                 .getAttribute("user")).getId();

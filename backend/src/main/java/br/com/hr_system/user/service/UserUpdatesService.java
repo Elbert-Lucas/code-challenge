@@ -1,9 +1,12 @@
 package br.com.hr_system.user.service;
 
+import br.com.hr_system.shared.dto.OkMessageResponseDTO;
 import br.com.hr_system.user.domain.User;
 import br.com.hr_system.user.dto.PasswordUpdateDto;
 import br.com.hr_system.user.dto.RegisterUserDto;
 import br.com.hr_system.user.enums.UserStatus;
+import br.com.hr_system.user.exception.InvalidConfirmPassword;
+import br.com.hr_system.user.exception.InvalidOldPassword;
 import br.com.hr_system.user.mapper.UserMapper;
 import br.com.hr_system.user.util.UserEmails;
 import br.com.hr_system.shared.dto.CreatedMessageResponseDTO;
@@ -49,7 +52,7 @@ public class UserUpdatesService {
         user.setPassword(passwordEncoder.encode(passwordDto.getNewPassword()));
         user.setStatus(UserStatus.ACTIVE);
         userRepository.save(user);
-        return new CreatedMessageResponseDTO("Senha atualizada com sucesso");
+        return new OkMessageResponseDTO("Senha atualizada com sucesso");
     }
     private void validatePassword(User user, PasswordUpdateDto passwordDto){
         if(user.getStatus().equals(UserStatus.PASSWORD_PENDING)) return;
@@ -58,10 +61,10 @@ public class UserUpdatesService {
             return;
         }else if(!passwordEncoder.matches(passwordDto.getOldPassword(), user.getPassword())){
             log.error("A senha antiga não confere com a senha passada");
-            throw new RuntimeException();
+            throw new InvalidOldPassword();
         }else{
             log.error("As novas senhas não conferem");
-            throw new RuntimeException();
+            throw new InvalidConfirmPassword();
         }
     }
 

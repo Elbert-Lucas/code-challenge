@@ -42,11 +42,6 @@ public class UserDetailsService {
         return userRepository.findById(Long.valueOf(id)).orElseThrow(RuntimeException::new);
     }
 
-    public UserBasicDetails getUserDetails(Long userId) {
-        return userDetailsRepository.findById(userId)
-                .orElseThrow(RuntimeException::new);
-    }
-
     public Optional<User> findUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
     }

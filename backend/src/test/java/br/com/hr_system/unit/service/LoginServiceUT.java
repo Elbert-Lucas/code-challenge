@@ -6,17 +6,18 @@ import br.com.hr_system.authentication.dto.LoginDTO;
 import br.com.hr_system.authentication.exception.InvalidUsernameOrPasswordException;
 import br.com.hr_system.authentication.service.LoginService;
 import br.com.hr_system.config.security.JwtUtil;
+import br.com.hr_system.user.domain.Address;
 import br.com.hr_system.user.domain.User;
 import br.com.hr_system.user.dto.PasswordUpdateDto;
 import br.com.hr_system.user.dto.RegisterUserDto;
 import br.com.hr_system.user.mapper.UserMapper;
+import br.com.hr_system.user.repository.UserRepository;
 import br.com.hr_system.user.service.UserDetailsService;
 import br.com.hr_system.user.service.UserUpdatesService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.checkerframework.checker.units.qual.A;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -25,6 +26,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -44,12 +46,12 @@ public class LoginServiceUT {
     UserMapper userMapper;
     @Autowired
     JwtUtil jwtUtil;
+    @Autowired
+    UserRepository userRepository;
 
     static RegisterUserDto registerUserDto;
     static User user;
     static LoginDTO loginDTO;
-
-    private static boolean isUserAlreadySaved = false;
 
     @BeforeAll
     static void setup() throws IOException {
@@ -63,7 +65,6 @@ public class LoginServiceUT {
 
     @BeforeEach
     void saveUser() throws IOException {
-        if(!isUserAlreadySaved){
             updatesService.registerUser(registerUserDto);
             user = userDetailsService.findUserByEmail(registerUserDto.getEmail()).get();
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
@@ -72,8 +73,20 @@ public class LoginServiceUT {
             PasswordUpdateDto passwordDto = new ObjectMapper().readValue(new File("src/test/resources/models/change-password.json"), PasswordUpdateDto.class);
             userUpdatesService.updatePassword(passwordDto);
             user = userDetailsService.findUserByEmail(registerUserDto.getEmail()).get();
-            isUserAlreadySaved = true;
-        }
+
+    }
+
+    @AfterEach
+    void deleteUser() throws IOException {
+        userRepository.findUserByEmail(registerUserDto.getEmail()).ifPresent(user -> {
+            userRepository.delete((user));
+        });
+        updateUserAddress();
+    }
+    private void updateUserAddress() throws IOException {
+        Address address = new ObjectMapper().readValue(new File("src/test/resources/models/address.json"), Address.class);
+        address.setAddress(address.getAddress() + ", " + new Random().nextInt());
+        registerUserDto.setAddress(address);
     }
     @Test
     void shouldLoginSuccessfully(){

@@ -24,7 +24,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     public JwtAuthenticationFilter(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
-    private final List<String> PERMITTED_ENDPOINTS = List.of("/login","/refresh-token");
+    private final List<String> PERMITTED_ENDPOINTS = List.of("/login","/refresh-token", "/user/register");
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -46,6 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             filterChain.doFilter(request, response);
         } catch (Exception exception) {
+            exception.printStackTrace();
             throw new InvalidTokenException();
         }
 

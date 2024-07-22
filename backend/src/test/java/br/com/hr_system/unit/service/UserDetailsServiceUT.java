@@ -1,6 +1,7 @@
 package br.com.hr_system.unit.service;
 
 import br.com.hr_system.config.security.JwtUtil;
+import br.com.hr_system.user.domain.Address;
 import br.com.hr_system.user.domain.User;
 import br.com.hr_system.user.domain.view.LoggedUserDetails;
 import br.com.hr_system.user.dto.RegisterUserDto;
@@ -10,6 +11,7 @@ import br.com.hr_system.user.service.UserDetailsService;
 import br.com.hr_system.user.service.UserUpdatesService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,6 +23,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,7 +46,6 @@ public class UserDetailsServiceUT {
 
     static User user;
     static String token;
-    private static boolean isUserAlreadySaved = false;
 
     @BeforeAll
     static void setup() throws IOException {
@@ -54,14 +56,23 @@ public class UserDetailsServiceUT {
 
     @BeforeEach
     void saveUser(){
-        if(!isUserAlreadySaved){
             updatesService.registerUser(registerUserDto);
             user = userRepository.findUserByEmail(registerUserDto.getEmail()).get();
             token = jwtUtil.createUserTokens(userMapper.entityToLoggedDTO(user)).get("token");
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
             request.setAttribute("user", userMapper.entityToLoggedDTO(user));
-            isUserAlreadySaved = true;
-        }
+    }
+    @AfterEach
+    void deleteUser() throws IOException {
+        userRepository.findUserByEmail(registerUserDto.getEmail()).ifPresent(user -> {
+            userRepository.delete((user));
+        });
+        updateUserAddress();
+    }
+    private void updateUserAddress() throws IOException {
+        Address address = new ObjectMapper().readValue(new File("src/test/resources/models/address.json"), Address.class);
+        address.setAddress(address.getAddress() + ", " + new Random().nextInt());
+        registerUserDto.setAddress(address);
     }
     @Test
     void shouldFindUserByToken(){

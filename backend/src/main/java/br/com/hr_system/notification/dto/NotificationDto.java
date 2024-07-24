@@ -6,11 +6,13 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.modelmapper.ModelMapper;
 
 import java.util.List;
 
 @Getter @Setter
+@ToString
 public class NotificationDto {
 
     @NotEmpty
@@ -20,8 +22,7 @@ public class NotificationDto {
     private String message;
 
     @NotEmpty
-    @JsonProperty("from")
-    private Long fromId;
+    private Long from;
 
     @JsonProperty("to-all")
     @NotNull
@@ -30,8 +31,4 @@ public class NotificationDto {
     @JsonProperty("to-users")
     private List<Long> users;
 
-    public Notification toEntity() {
-        Notification notification = new ModelMapper().map(this, Notification.class);
-        return notification;
-    }
 }

@@ -20,7 +20,4 @@ public class Function implements Serializable {
 
     @Column
     private String description;
-
-    @OneToMany(mappedBy = "function")
-    private List<User> users;
 }

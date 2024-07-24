@@ -20,8 +20,4 @@ public class Department implements Serializable {
 
     @Column
     private String description;
-
-    @OneToMany(mappedBy = "department")
-    private List<User> users;
-
 }

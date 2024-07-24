@@ -2,6 +2,7 @@ package br.com.hr_system.user.domain;
 
 import br.com.hr_system.user.enums.UserStatus;
 import br.com.hr_system.notification.domain.Notification;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -67,13 +68,15 @@ public class User implements Serializable {
     @Enumerated(value = EnumType.STRING)
     private UserStatus status;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "TB_NOTIFICATION_USER",
               joinColumns = @JoinColumn(name = "user_id"),
               inverseJoinColumns = @JoinColumn(name = "notification_id"))
+    @JsonManagedReference
     private List<Notification> notifications;
 
-    @OneToMany(mappedBy = "from")
+    @OneToMany(mappedBy = "from", fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<Notification> sendNotifications;
 
 }

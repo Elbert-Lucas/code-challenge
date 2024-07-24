@@ -5,8 +5,8 @@ import br.com.hr_system.user.domain.User;
 import br.com.hr_system.user.dto.PasswordUpdateDto;
 import br.com.hr_system.user.dto.RegisterUserDto;
 import br.com.hr_system.user.enums.UserStatus;
-import br.com.hr_system.user.exception.InvalidConfirmPassword;
-import br.com.hr_system.user.exception.InvalidOldPassword;
+import br.com.hr_system.user.exception.InvalidConfirmPasswordException;
+import br.com.hr_system.user.exception.InvalidOldPasswordException;
 import br.com.hr_system.user.mapper.UserMapper;
 import br.com.hr_system.user.util.UserEmails;
 import br.com.hr_system.shared.dto.CreatedMessageResponseDTO;
@@ -61,10 +61,10 @@ public class UserUpdatesService {
             return;
         }else if(!passwordEncoder.matches(passwordDto.getOldPassword(), user.getPassword())){
             log.error("A senha antiga não confere com a senha passada");
-            throw new InvalidOldPassword();
+            throw new InvalidOldPasswordException();
         }else{
             log.error("As novas senhas não conferem");
-            throw new InvalidConfirmPassword();
+            throw new InvalidConfirmPasswordException();
         }
     }
 

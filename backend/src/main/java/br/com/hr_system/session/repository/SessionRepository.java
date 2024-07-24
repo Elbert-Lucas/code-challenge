@@ -11,4 +11,5 @@ import java.util.Optional;
 @Repository
 public interface SessionRepository extends CrudRepository<Session, String>{
     List<Session> findByUserId(String userId);
+
 }

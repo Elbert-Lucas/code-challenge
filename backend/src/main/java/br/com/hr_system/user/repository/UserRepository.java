@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query("SELECT User FROM TB_USER User WHERE id IN :ids")
     List<User> findMultipleUsersByIds(List<Long> ids);

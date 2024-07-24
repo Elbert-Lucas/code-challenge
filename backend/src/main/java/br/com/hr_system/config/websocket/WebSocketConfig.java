@@ -4,33 +4,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
-import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
-import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.config.annotation.*;
 
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    private final ConnectAuthInterceptor authInterceptor;
+    private final WebSocketInterceptor webSocketInterceptor;
 
     @Autowired
-    public WebSocketConfig(ConnectAuthInterceptor authInterceptor) {
-        this.authInterceptor = authInterceptor;
+    public WebSocketConfig(WebSocketInterceptor webSocketInterceptor) {
+        this.webSocketInterceptor = webSocketInterceptor;
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config){
         config.setApplicationDestinationPrefixes("/ws");
-        config.enableSimpleBroker("/notification/receive");
+        config.enableSimpleBroker("/notification/");
     }
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry){
-        registry.addEndpoint("/connect").setAllowedOrigins("http://localhost:4200");
-        registry.addEndpoint("/connect").setAllowedOrigins("http://localhost:4200").withSockJS();
+        registry.addEndpoint("/connect").setAllowedOrigins("http://localhost:4200").setHandshakeHandler(webSocketInterceptor);
+        registry.addEndpoint("/connect").setAllowedOrigins("http://localhost:4200").setHandshakeHandler(webSocketInterceptor).withSockJS();
     }
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
-        registration.interceptors(authInterceptor);
+        registration.interceptors(webSocketInterceptor);
+    }
+
+    @Override
+    public void configureWebSocketTransport(WebSocketTransportRegistration registry) {
+        registry.addDecoratorFactory(webSocketInterceptor);
     }
 }

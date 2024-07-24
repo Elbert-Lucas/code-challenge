@@ -1,6 +1,7 @@
 package br.com.hr_system.notification.dto;
 
 import br.com.hr_system.notification.domain.Notification;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -21,8 +22,8 @@ public class NotificationDto {
     @NotEmpty
     private String message;
 
-    @NotEmpty
-    private Long from;
+    @JsonIgnore
+    private Integer from;
 
     @JsonProperty("to-all")
     @NotNull

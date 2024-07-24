@@ -39,11 +39,14 @@ public class UserDetailsService {
         Integer id =((LoggedUserDetails) ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
                 .getRequest()
                 .getAttribute("user")).getId();
-        return userRepository.findById(Long.valueOf(id)).orElseThrow(RuntimeException::new);
+        return userRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
     public Optional<User> findUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
+    }
+    public Optional<User> findUserById(Integer id){
+        return userRepository.findById(id);
     }
 
 }

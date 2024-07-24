@@ -25,7 +25,7 @@ public class UserController {
         this.userUpdatesService = userUpdatesService;
     }
 
-    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MessageResponseDTO> registerUser(@RequestBody @Valid RegisterUserDto registerUserDto){
         log.debug("Iniciando registro de usuario");
         MessageResponseDTO response = userUpdatesService.registerUser(registerUserDto);

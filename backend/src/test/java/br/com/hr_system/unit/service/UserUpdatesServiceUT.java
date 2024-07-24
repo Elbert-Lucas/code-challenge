@@ -5,9 +5,8 @@ import br.com.hr_system.user.domain.User;
 import br.com.hr_system.user.dto.PasswordUpdateDto;
 import br.com.hr_system.user.dto.RegisterUserDto;
 import br.com.hr_system.user.enums.UserStatus;
-import br.com.hr_system.user.exception.InvalidConfirmPassword;
-import br.com.hr_system.user.exception.InvalidOldPassword;
-import br.com.hr_system.user.mapper.UserMapper;
+import br.com.hr_system.user.exception.InvalidConfirmPasswordException;
+import br.com.hr_system.user.exception.InvalidOldPasswordException;
 import br.com.hr_system.user.repository.UserRepository;
 import br.com.hr_system.user.service.UserDetailsService;
 import br.com.hr_system.user.service.UserUpdatesService;
@@ -94,7 +93,7 @@ public class UserUpdatesServiceUT {
         when(userDetailsService.findLoggedUser()).thenReturn(user);
 
         PasswordUpdateDto passwordDto = new ObjectMapper().readValue(new File("src/test/resources/models/change-password.json"), PasswordUpdateDto.class);
-        assertThrows(InvalidOldPassword.class, () -> userUpdatesService.updatePassword(passwordDto).getStatus());
+        assertThrows(InvalidOldPasswordException.class, () -> userUpdatesService.updatePassword(passwordDto).getStatus());
     }
     @Test
     void shouldThrowExceptionOnInvalidConfirmPassword() throws IOException {
@@ -106,6 +105,6 @@ public class UserUpdatesServiceUT {
 
         PasswordUpdateDto passwordDto = new ObjectMapper().readValue(new File("src/test/resources/models/change-password.json"), PasswordUpdateDto.class);
         passwordDto.setConfirmPassword("Confirm");
-        assertThrows(InvalidConfirmPassword.class, () -> userUpdatesService.updatePassword(passwordDto).getStatus());
+        assertThrows(InvalidConfirmPasswordException.class, () -> userUpdatesService.updatePassword(passwordDto).getStatus());
     }
 }

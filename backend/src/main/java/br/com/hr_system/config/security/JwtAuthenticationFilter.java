@@ -36,7 +36,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String jwt;
 
         if(request.getRequestURI().contains("/user/change-password") && request.getHeader("email-auth") != null){
-            jwt = request.getHeader("email-auth");
+            jwt = request.getHeader("email-auth").substring(7);
             isRegister = true;
         }else jwt = request.getHeader("Authorization").substring(7);
 

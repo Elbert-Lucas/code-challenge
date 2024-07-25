@@ -45,6 +45,9 @@ public class UserDetailsService {
     public Optional<User> findUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
     }
+    public Optional<User> findActiveUserByEmail(String email) {
+        return userRepository.findUserByEmailAndStatusIsActive(email);
+    }
     public Optional<User> findUserById(Integer id){
         return userRepository.findById(id);
     }

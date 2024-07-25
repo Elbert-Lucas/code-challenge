@@ -2,87 +2,117 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 .container{
-    height: 100%;
+/*Display stuff*/
     display: flex;
     flex-direction: column;
+/*Box model stuff*/
+    height: 100%;
     background-color: var(--default-grey) ;
 }
 
 .bkg-img{
-    border-radius: 50%;
+/*Positioning stuff*/
     position:absolute;
-    background-repeat: no-repeat;
+/*Box model stuff*/
     margin-top: 3%;
+    border-radius: 50%;
+    background-repeat: no-repeat;
 }
 
 #principal-img{
+/*Positioning stuff*/
+    left: 5vw;
+    z-index: 3;
+/*Box model stuff*/
     width: 30vw;
     height: 30vw;
     background-image: url("../../../assets/principal_circle.jpeg");
-    background-size: cover;
     background-position: right bottom;
-    left: 5vw;
-    z-index: 3;
+    background-size: cover;
 }
 #secundary-img{
-    width: 20vw;
-    height: 20vw;
-    background-image: url("../../../assets/secundary_circle.jpg");
-    background-size: cover;
-    background-position: right bottom;
+/*Positioning stuff*/
     left: 31vw;
     top: 20vw;
     z-index: 2;
+/*Box model stuff*/
+    width: 20vw;
+    height: 20vw;
+    background-image: url("../../../assets/secundary_circle.jpg");
+    background-position: right bottom;
+    background-size: cover;
 }
 #final-img{
-    width: 15vw;
-    height: 15vw;
-    background-image: url("../../../assets/final_circle.jpg");
-    background-size: cover;
-    background-position: -5vw bottom;
+/*Positioning stuff*/
     left: 49vw;
     top: 12vw;
     z-index: 1;
+/*Box model stuff*/
+    width: 15vw;
+    height: 15vw;
+    background-image: url("../../../assets/final_circle.jpg");
+    background-position: -5vw bottom;
+    background-size: cover;
 }
 #welcome-text{
+/*Positioning stuff*/
     position: absolute;
-    top: 35%;
     left: 5vw;
+    top: 35%;
 }
 
 #welcome-text > h1{
+/*Typography stuff*/
     font-family: "Allura", cursive, 'Trebuchet MS', 'Lucida Sans Unicode';
     font-size: 104px;
     color:var(--default-blue);
 }
 #welcome-text > h3{
+/*Typography stuff*/
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: 26px;
     color: var(--secundary-title);
 }
 app-card{
-    z-index: 4;
-    width: 435px;
-    float: right;
+/*Display stuff*/
     align-self: end;
-    margin-block: auto;
+/*Positioning stuff*/
+    z-index: 4;
+/*Box model stuff*/
+    width: 435px;
     margin-right: 5vw;
+/*Miscellaneous*/
+    float: right;
+    margin-block: auto;
 }
 #inputs-fields{
-    align-content: center;
+/*Display stuff*/
     display: grid;
+    align-content: center;
+/*Miscellaneous*/
     row-gap: 15px;
 }
 #forget-password{
-    text-align: center;
+/*Display stuff*/
+    justify-self: center;
+/*Typography stuff*/
     font-family:var(--text-font-family);
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
     color: var(--secundary-title);
+/*Manipulations stuff*/
+    opacity: .6;
+/*Miscellaneous*/
     cursor: pointer;
 }
 .fadeIn{
+/*Manipulations stuff*/
     animation: fadeIn 6s forwards;
 }
 .fadeOut{
+/*Manipulations stuff*/
     animation: fadeOut 2s forwards;
 }
 

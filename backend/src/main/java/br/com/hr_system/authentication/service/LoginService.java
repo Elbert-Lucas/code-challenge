@@ -33,7 +33,7 @@ public class LoginService {
     }
 
     private User findUser(String username){
-        return userDetailsService.findUserByEmail(username)
+        return userDetailsService.findActiveUserByEmail(username)
                              .orElseThrow(InvalidUsernameOrPasswordException::new);
     }
     private void validatePassword(String passwordDTO, User user){

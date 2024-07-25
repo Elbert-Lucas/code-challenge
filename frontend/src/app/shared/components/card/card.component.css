@@ -1,0 +1,11 @@
+#card{
+/*Display stuff*/
+    display: grid;
+/*Box model stuff*/
+    padding: 30px;
+    border: solid 2px var(--dark-grey);
+    border-radius: 3px;
+    background-color: var(--pure-white);
+/*Miscellaneous*/
+    row-gap: 25px;
+}

@@ -1,13 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { CardComponent } from "../../shared/components/card/card.component";
+import { InputComponent, InputType } from '../../shared/components/input/input.component';
+import { ButtonComponent } from '../../shared/components/button/button.component';
+import { LogoComponent } from '../../shared/components/logo/logo.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [],
+  imports: [CardComponent,LogoComponent, InputComponent, ButtonComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit{
+  protected readonly emailType: InputType = InputType.Email;
+  protected passwordType: InputType = InputType.Password;
 
   ngOnInit(): void {
     this.raffleFirstBackground()

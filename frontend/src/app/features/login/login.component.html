@@ -10,15 +10,15 @@
         <h3>Para aqueles que buscam organização</h3>
         <h3>Para aqueles que buscam o melhor sistema de RH</h3>
     </div>
-    <div id="login-card">
-        <h1 id="logo">HR System</h1>
+    <app-card>
+        <app-logo></app-logo>
         <div id="inputs-fields">
-            <input type="text" class="login-input" placeholder="Email de acesso">
-            <input type="password" class="login-input" placeholder="Senha de acesso">
+            <app-input [type]="emailType" placeholder="Email de acesso"></app-input>
+            <app-input [type]="passwordType" placeholder="Confirmar Senha"></app-input>
         </div>
-        <button id="login-button">Entrar</button>
+        <app-button text="Entrar"></app-button>
         <div>
             <h5 href="youtube.com" id="forget-password">Esqueceu a senha?</h5>
         </div>
-    </div>
+    </app-card>
 </main>

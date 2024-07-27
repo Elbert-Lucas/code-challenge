@@ -13,10 +13,10 @@
     <app-card>
         <app-logo></app-logo>
         <div id="inputs-fields">
-            <app-input [type]="emailType" placeholder="Email de acesso"></app-input>
-            <app-input [type]="passwordType" placeholder="Senha de acesso"></app-input>
+            <app-input [type]="emailType" placeholder="Email de acesso" (value)="email = $event"></app-input>
+            <app-input [type]="passwordType" placeholder="Senha de acesso" (value)="password = $event"></app-input>
         </div>
-        <app-button text="Entrar"></app-button>
+        <app-button text="Entrar" (click)="doLogin()"></app-button>
         <a href="youtube.com" id="forget-password">Esqueceu a senha?</a>
     </app-card>
 </main>

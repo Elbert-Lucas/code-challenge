@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
 
-#logo{
+.logo{
     font-family:"Kaushan Script", cursive;
     font-size: 60px;
     color: var(--default-blue);

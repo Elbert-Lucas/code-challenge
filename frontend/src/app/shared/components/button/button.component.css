@@ -1,5 +1,4 @@
-
-#button-component{
+.button-component{
 /*Box model stuff*/
     width: 100%;
     height: 100%;
@@ -14,11 +13,11 @@
     cursor: pointer;
     box-sizing: border-box;
   }
-  #button-component:hover{
+  .button-component:hover{
     background-color: var(--dark-blue);
   }
   
-  #button-component:active{
+  .button-component:active{
     
   transform: translateY(1px);
   }

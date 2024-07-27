@@ -1,10 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit, Output, output, SimpleChange } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.css'],
-  standalone: true
+  standalone: true,
+  imports: [FormsModule]
 })
 export class InputComponent implements OnInit {
   @Input()
@@ -12,9 +14,17 @@ export class InputComponent implements OnInit {
   @Input()
   placeholder: string = '';
 
+  protected inputed: string = ''
+  value = output<string>();
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  @HostListener('change', ['$event'])
+  onInputChange(event: any) {
+    this.value.emit(this.inputed);
   }
 
 }

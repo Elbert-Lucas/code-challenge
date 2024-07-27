@@ -5,6 +5,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 public class InvalidTokenException extends ResponseStatusException {
     public InvalidTokenException(){
-        super(HttpStatus.UNAUTHORIZED, "O token enviado é inválido ou expirou ");
+        super(HttpStatus.UNAUTHORIZED, "O token enviado é inválido ou expirou");
+    }
+    public String toString(){
+        return "{\"message\":\"O token enviado é inválido ou expirou\",\"status\":\"UNAUTHORIZED\"}";
     }
 }

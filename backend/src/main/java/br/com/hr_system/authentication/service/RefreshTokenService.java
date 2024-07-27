@@ -23,6 +23,7 @@ public class RefreshTokenService {
     }
 
     public CredentialsDto refreshToken(RefreshTokenDTO refreshToken) {
+        refreshToken.setRefreshToken(refreshToken.getRefreshToken().substring(7));
         LoggedUserDetails user = userDetailsService.findUserByToken(refreshToken.getRefreshToken());
         return new CredentialsDto(jwtUtil.refreshToken(refreshToken.getRefreshToken(), user));
     }

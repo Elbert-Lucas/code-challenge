@@ -3,6 +3,11 @@ import { CardComponent } from "../../shared/components/card/card.component";
 import { InputComponent, InputType } from '../../shared/components/input/input.component';
 import { ButtonComponent } from '../../shared/components/button/button.component';
 import { LogoComponent } from '../../shared/components/logo/logo.component';
+import { LoginService } from '../../core/service/Login.service';
+import { LoginModel } from '../../core/model/request/LoginModel';
+import { LocalStorageService } from '../../core/service/LocalStorage.service';
+import { AuthTokens } from '../../core/model/response/AuthTokens';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +17,14 @@ import { LogoComponent } from '../../shared/components/logo/logo.component';
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit{
+  
   protected readonly emailType: InputType = InputType.Email;
   protected passwordType: InputType = InputType.Password;
+
+  protected email: string = '';
+  protected password: string = '';
+
+  constructor(private loginService: LoginService, private storageService: LocalStorageService){}
 
   ngOnInit(): void {
     this.raffleFirstBackground()
@@ -48,5 +59,16 @@ export class LoginComponent implements OnInit{
     textBkg?.classList.remove("fadeIn")
    }
   }
-  
+  protected doLogin(): void{
+    const requestModel: LoginModel = {
+      username: this.email,
+      password: this.password
+    }
+
+    this.loginService.doLogin(requestModel).subscribe({
+      next: (response) => {
+        this.storageService.setObject(response)
+      }
+    })
+  }  
 }

@@ -25,12 +25,12 @@ public class NotificationDetailsService {
     }
     public Page<NotificationResponseDto> findReceived(Pageable pageable) {
         User loggedUser = userDetailsService.findLoggedUser();
-        return notificationRepository.findAllByUsers_OrToAllIsTrue(loggedUser, pageable)
+        return notificationRepository.findAllByUsersOrToAllTrueOrderByIdDesc(loggedUser, pageable)
                 .map(notificationMapper::entityToResponseDto);
     }
     public Page<NotificationResponseDto> findSent(Pageable pageable) {
         User loggedUser = userDetailsService.findLoggedUser();
-        return notificationRepository.findAllByFrom(loggedUser, pageable)
+        return notificationRepository.findAllByFrom_OrderByIdDesc(loggedUser, pageable)
                 .map(notificationMapper::entityToResponseDto);
     }
 }

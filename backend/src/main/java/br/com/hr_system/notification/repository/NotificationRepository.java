@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
-    Page<Notification> findAllByUsers_OrToAllIsTrue(User user, Pageable pageable);
-    Page<Notification> findAllByFrom(User user, Pageable pageable);
+    Page<Notification> findAllByUsersOrToAllTrueOrderByIdDesc(User user, Pageable pageable);
+    Page<Notification> findAllByFrom_OrderByIdDesc(User user, Pageable pageable);
 }

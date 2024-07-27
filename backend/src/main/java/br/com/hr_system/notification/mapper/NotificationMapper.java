@@ -3,6 +3,7 @@ package br.com.hr_system.notification.mapper;
 import br.com.hr_system.notification.domain.Notification;
 import br.com.hr_system.notification.dto.NotificationDto;
 import br.com.hr_system.notification.dto.NotificationResponseDto;
+import br.com.hr_system.user.mapper.UserMapper;
 import br.com.hr_system.user.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,11 @@ import java.util.List;
 public class NotificationMapper {
 
     private final UserRepository userRepository;
-
+    private final UserMapper userMapper;
     @Autowired
-    public NotificationMapper(UserRepository userRepository) {
+    public NotificationMapper(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
     public Notification dtoToEntity(NotificationDto dto) {
@@ -37,7 +39,9 @@ public class NotificationMapper {
 
     public NotificationResponseDto entityToResponseDto(Notification notification) {
         NotificationResponseDto responseDto = new ModelMapper().map(notification, NotificationResponseDto.class);
-        responseDto.setFrom(notification.getFrom().getName());
+        responseDto.setFrom(userMapper.entityToSimpleDTO(notification.getFrom()));
+        responseDto.setToAll(notification.getToAll());
+        responseDto.setTo(notification.getUsers().stream().map(userMapper::entityToSimpleDTO).toList());
         return responseDto;
     }
 }

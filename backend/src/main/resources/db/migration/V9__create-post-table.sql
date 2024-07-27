@@ -1,0 +1,8 @@
+CREATE TABLE TB_POST(
+    id SERIAL PRIMARY KEY NOT NULL,
+    user_id INTEGER NOT NULL,
+    text VARCHAR NOT NULL,
+    image VARCHAR,
+    created_dth TIMESTAMP NOT NULL,
+    CONSTRAINT tb_user_fk FOREIGN KEY (user_id) REFERENCES TB_USER(id)
+);

@@ -4,6 +4,7 @@ import br.com.hr_system.user.domain.User;
 import br.com.hr_system.user.domain.view.LoggedUserDetails;
 import br.com.hr_system.user.domain.view.UserBasicDetails;
 import br.com.hr_system.user.dto.RegisterUserDto;
+import br.com.hr_system.user.dto.SimpleUserDto;
 import br.com.hr_system.user.enums.UserRole;
 import br.com.hr_system.user.enums.UserStatus;
 import br.com.hr_system.user.repository.RoleRepository;
@@ -30,6 +31,10 @@ public class UserMapper {
         dto.setDepartment(entity.getDepartment().getName());
         dto.setFunction(entity.getFunction().getName());
         dto.setPhone(entity.getRole().getRole().name());
+        return dto;
+    }
+    public SimpleUserDto entityToSimpleDTO(User entity){
+        SimpleUserDto dto = new ModelMapper().map(entity, SimpleUserDto.class);
         return dto;
     }
     public LoggedUserDetails entityToLoggedDTO(User entity){

@@ -1,7 +1,9 @@
 package br.com.hr_system.notification.controller;
 
 import br.com.hr_system.notification.dto.NotificationResponseDto;
+import br.com.hr_system.notification.dto.ResponseView;
 import br.com.hr_system.notification.service.NotificationDetailsService;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,10 +24,12 @@ public class NotificationRestController {
         this.notificationDetailsService = notificationDetailsService;
     }
 
+    @JsonView(ResponseView.Receive.class)
     @GetMapping("/received")
     public ResponseEntity<Page<NotificationResponseDto>> getReceived(Pageable pageable){
         return new ResponseEntity<>(notificationDetailsService.findReceived(pageable), HttpStatus.OK);
     }
+    @JsonView(ResponseView.Sent.class)
     @GetMapping("/sent")
     public ResponseEntity<Page<NotificationResponseDto>> getSent(Pageable pageable){
         return new ResponseEntity<>(notificationDetailsService.findSent(pageable), HttpStatus.OK);

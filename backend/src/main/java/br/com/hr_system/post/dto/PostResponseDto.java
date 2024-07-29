@@ -1,6 +1,6 @@
 package br.com.hr_system.post.dto;
 
-import br.com.hr_system.user.dto.SimpleUserDto;
+import br.com.hr_system.user.domain.view.SimpleUserDetails;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Builder @ToString
 public class PostResponseDto {
     private String text;
-    private SimpleUserDto user;
+    private SimpleUserDetails user;
     private String image;
     private LocalDateTime createdDate;
 }

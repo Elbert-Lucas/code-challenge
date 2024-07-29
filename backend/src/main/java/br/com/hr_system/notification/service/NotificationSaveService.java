@@ -1,10 +1,9 @@
 package br.com.hr_system.notification.service;
 
 import br.com.hr_system.notification.domain.Notification;
+import br.com.hr_system.notification.domain.view.ResponseNotification;
 import br.com.hr_system.notification.dto.NotificationDto;
-import br.com.hr_system.notification.dto.NotificationResponseDto;
 import br.com.hr_system.notification.mapper.NotificationMapper;
-import br.com.hr_system.notification.repository.NotificationRepository;
 import br.com.hr_system.notification.repository.NotificationInserterRepository;
 import br.com.hr_system.session.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +35,10 @@ public class NotificationSaveService {
     }
 
     @Transactional
-    public NotificationResponseDto postNotification(NotificationDto notificationDto, Principal principal){
+    public ResponseNotification postNotification(NotificationDto notificationDto, Principal principal){
         notificationDto.setFrom(findFromUser(principal));
         Notification notification = saveNotification(notificationDto);
-        NotificationResponseDto responseDto = notificationMapper.entityToResponseDto(notification);
+        ResponseNotification responseDto = notificationMapper.entityToResponseDto(notification);
         if(notificationDto.getToAll()) {
             return responseDto;
         }else return sendNotificationToUsers(notificationDto, responseDto);
@@ -54,7 +53,9 @@ public class NotificationSaveService {
         notification.setId(notificationId);
         return notification;
     }
-    private NotificationResponseDto sendNotificationToUsers(NotificationDto notificationDto, NotificationResponseDto responseDto) {
+    private ResponseNotification sendNotificationToUsers(NotificationDto notificationDto, ResponseNotification responseDto) {
+        responseDto.setToAll(null);
+        responseDto.setTo(null);
         List<String> sessions = sessionService.findSessionByUserId(notificationDto.getUsers().stream().map(Object::toString).toList());
         sessions.forEach(session -> {
             this.simpMessaging.convertAndSendToUser(session,

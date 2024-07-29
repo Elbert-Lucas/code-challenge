@@ -68,15 +68,4 @@ public class User implements Serializable {
     @Enumerated(value = EnumType.STRING)
     private UserStatus status;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "TB_NOTIFICATION_USER",
-              joinColumns = @JoinColumn(name = "user_id"),
-              inverseJoinColumns = @JoinColumn(name = "notification_id"))
-    @JsonManagedReference
-    private List<Notification> notifications;
-
-    @OneToMany(mappedBy = "from", fetch = FetchType.EAGER)
-    @JsonManagedReference
-    private List<Notification> sendNotifications;
-
 }

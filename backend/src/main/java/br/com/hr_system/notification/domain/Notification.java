@@ -40,8 +40,11 @@ public class Notification implements Serializable {
     @Column
     private Boolean toAll;
 
-    @ManyToMany(mappedBy = "notifications", fetch = FetchType.EAGER)
-    private List<User> users;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "TB_NOTIFICATION_USER",
+            joinColumns = @JoinColumn(name = "notification_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> to;
 
     @Column(name = "created_dth", updatable = false)
     @CreatedDate
@@ -53,7 +56,7 @@ public class Notification implements Serializable {
     }
 
     @JsonIgnore
-    public List<User> getUsers() {
-        return users;
+    public List<User> getToUsers() {
+        return to;
     }
 }

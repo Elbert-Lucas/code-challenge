@@ -1,7 +1,5 @@
 package br.com.hr_system.post.mapper;
 
-import br.com.hr_system.notification.domain.Notification;
-import br.com.hr_system.notification.dto.NotificationResponseDto;
 import br.com.hr_system.post.domain.Post;
 import br.com.hr_system.post.dto.CreatePostDto;
 import br.com.hr_system.post.dto.PostResponseDto;

@@ -15,4 +15,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findMultipleUsersByIds(List<Long> ids);
 
     Optional<User> findUserByEmail(String email);
+
+
+    @Query("SELECT User FROM TB_USER User WHERE email=:email AND status=ACTIVE")
+    Optional<User> findUserByEmailAndStatusIsActive(String email);
 }

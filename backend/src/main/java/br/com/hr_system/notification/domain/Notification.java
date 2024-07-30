@@ -7,14 +7,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity(name = "TB_NOTIFICATION")
+@EntityListeners(AuditingEntityListener.class)
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
 @Builder
-public class Notification {
+public class Notification implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,8 +40,15 @@ public class Notification {
     @Column
     private Boolean toAll;
 
-    @ManyToMany(mappedBy = "notifications", fetch = FetchType.EAGER)
-    private List<User> users;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "TB_NOTIFICATION_USER",
+            joinColumns = @JoinColumn(name = "notification_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> to;
+
+    @Column(name = "created_dth", updatable = false)
+    @CreatedDate
+    private LocalDateTime createdDate;
 
     @JsonBackReference
     public User getFrom() {
@@ -42,7 +56,7 @@ public class Notification {
     }
 
     @JsonIgnore
-    public List<User> getUsers() {
-        return users;
+    public List<User> getToUsers() {
+        return to;
     }
 }

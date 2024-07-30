@@ -1,0 +1,23 @@
+.button-component{
+/*Box model stuff*/
+    width: 100%;
+    height: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    background-color:var(--default-blue);
+/*Typography stuff*/
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--pure-white);
+/*Miscellaneous*/
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+  .button-component:hover{
+    background-color: var(--dark-blue);
+  }
+  
+  .button-component:active{
+    
+  transform: translateY(1px);
+  }

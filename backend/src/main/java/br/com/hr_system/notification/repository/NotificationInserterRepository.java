@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ public class NotificationInserterRepository {
         parameters.put("title", notification.getTitle());
         parameters.put("message", notification.getMessage());
         parameters.put("to_all", notification.getToAll());
+        parameters.put("created_dth", notification.getCreatedDate());
 
         Number id =  notificationInserter.executeAndReturnKey(parameters);
         if(!notification.getToAll()) insertUsersOnNotification(id, notification);
@@ -44,7 +46,7 @@ public class NotificationInserterRepository {
     }
     private String createInsertPivotQuery(Number notificationId, Notification notification){
         StringBuilder query = new StringBuilder(INSERT_PIVOT_QUERY);
-        List<User> users = notification.getUsers();
+        List<User> users = notification.getTo();
 
         users.forEach(user -> {
             query.append(VALUES.replaceFirst("\\?", String.valueOf(notificationId)).replaceFirst("\\?", String.valueOf(user.getId())));

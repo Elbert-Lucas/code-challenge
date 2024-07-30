@@ -9,16 +9,16 @@ import lombok.*;
 @NoArgsConstructor @AllArgsConstructor
 public class PasswordUpdateDto {
 
-    @JsonProperty("old-password")
+    @JsonProperty("old_password")
     private String oldPassword;
 
-    @JsonProperty("confirm-password")
+    @JsonProperty("confirm_password")
     @NotNull
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{9,}$",
             message = "{invalid.password}")
     private String confirmPassword;
 
-    @JsonProperty("new-password")
+    @JsonProperty("new_password")
     @NotNull
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{9,}$",
             message = "{invalid.password}")

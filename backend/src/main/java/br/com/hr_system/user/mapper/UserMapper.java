@@ -2,6 +2,7 @@ package br.com.hr_system.user.mapper;
 
 import br.com.hr_system.user.domain.User;
 import br.com.hr_system.user.domain.view.LoggedUserDetails;
+import br.com.hr_system.user.domain.view.SimpleUserDetails;
 import br.com.hr_system.user.domain.view.UserBasicDetails;
 import br.com.hr_system.user.dto.RegisterUserDto;
 import br.com.hr_system.user.enums.UserRole;
@@ -30,6 +31,10 @@ public class UserMapper {
         dto.setDepartment(entity.getDepartment().getName());
         dto.setFunction(entity.getFunction().getName());
         dto.setPhone(entity.getRole().getRole().name());
+        return dto;
+    }
+    public SimpleUserDetails entityToSimpleDTO(User entity){
+        SimpleUserDetails dto = new ModelMapper().map(entity, SimpleUserDetails.class);
         return dto;
     }
     public LoggedUserDetails entityToLoggedDTO(User entity){

@@ -1,123 +1,118 @@
 @import url('https://fonts.googleapis.com/css2?family=Allura&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
 
 .container{
-    height: 100%;
+/*Display stuff*/
     display: flex;
     flex-direction: column;
-    background-color: #FAFAFA;
+/*Box model stuff*/
+    height: 100%;
+    background-color: var(--default-grey) ;
 }
 
 .bkg-img{
-    border-radius: 50%;
+/*Positioning stuff*/
     position:absolute;
-    background-repeat: no-repeat;
+/*Box model stuff*/
     margin-top: 3%;
+    border-radius: 50%;
+    background-repeat: no-repeat;
 }
 
 #principal-img{
+/*Positioning stuff*/
+    left: 5vw;
+    z-index: 3;
+/*Box model stuff*/
     width: 30vw;
     height: 30vw;
     background-image: url("../../../assets/principal_circle.jpeg");
-    background-size: cover;
     background-position: right bottom;
-    left: 5vw;
-    z-index: 3;
+    background-size: cover;
 }
 #secundary-img{
-    width: 20vw;
-    height: 20vw;
-    background-image: url("../../../assets/secundary_circle.jpg");
-    background-size: cover;
-    background-position: right bottom;
+/*Positioning stuff*/
     left: 31vw;
     top: 20vw;
     z-index: 2;
+/*Box model stuff*/
+    width: 20vw;
+    height: 20vw;
+    background-image: url("../../../assets/secundary_circle.jpg");
+    background-position: right bottom;
+    background-size: cover;
 }
 #final-img{
-    width: 15vw;
-    height: 15vw;
-    background-image: url("../../../assets/final_circle.jpg");
-    background-size: cover;
-    background-position: -5vw bottom;
+/*Positioning stuff*/
     left: 49vw;
     top: 12vw;
     z-index: 1;
+/*Box model stuff*/
+    width: 15vw;
+    height: 15vw;
+    background-image: url("../../../assets/final_circle.jpg");
+    background-position: -5vw bottom;
+    background-size: cover;
 }
 #welcome-text{
+/*Positioning stuff*/
     position: absolute;
-    top: 35%;
     left: 5vw;
+    top: 35%;
 }
 
 #welcome-text > h1{
+/*Typography stuff*/
     font-family: "Allura", cursive, 'Trebuchet MS', 'Lucida Sans Unicode';
     font-size: 104px;
-    color: #2CC0FF;
+    color:var(--default-blue);
 }
 #welcome-text > h3{
+/*Typography stuff*/
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: 26px;
-    opacity: .6;
+    color: var(--secundary-title);
 }
-#login-card{
-    z-index: 4;
-    width: 435px;
-    float: right;
-    background-color: rgb(255, 255, 255);
-    border: solid 2px rgba(0, 0, 0, 0.1);
-    border-radius: 3px;
+app-card{
+/*Display stuff*/
     align-self: end;
-    margin-block: auto;
+/*Positioning stuff*/
+    z-index: 4;
+/*Box model stuff*/
+    width: 435px;
     margin-right: 5vw;
-    display: grid;
-    grid-template-rows: 110px 120px 60px 80px;
-}
-#logo{
-    font-family: "Kaushan Script", cursive;
-    font-size: 60px;
-    color: #2CC0FF;
-    text-align: center;
-    margin-top: 15px;
-    height: 20%;
+/*Miscellaneous*/
+    float: right;
+    margin-block: auto;
 }
 #inputs-fields{
-    align-content: center;
+/*Display stuff*/
     display: grid;
-}
-.login-input{
-  padding: 13px;
-  width: 80%;
-  font-size: 15px;
-  background-color: #F5F5F5;
-  border: solid 1px rgba(0, 0, 0, 0.20);  
-  border-radius: 5px;
-  margin-bottom: 10px;
-  justify-self: center;
-}
-#login-button{
-  margin-top: 10px;
-  cursor: pointer;
-  height: 40px;
-  width: 85%;
-  font-size: 16px;
-  font-weight: bold;
-  color: #ffffff;
-  border-radius: 8px;
-  justify-self: center;
-  background-color: #2CC0FF;
+    align-content: center;
+/*Miscellaneous*/
+    row-gap: 15px;
 }
 #forget-password{
+/*Display stuff*/
+    justify-self: center;
+/*Typography stuff*/
+    font-family:var(--text-font-family);
+    font-size: 14px;
+    font-weight: 600;
     text-align: center;
-    font-family:Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    color: var(--secundary-title);
+/*Manipulations stuff*/
     opacity: .6;
+/*Miscellaneous*/
     cursor: pointer;
 }
 .fadeIn{
+/*Manipulations stuff*/
     animation: fadeIn 6s forwards;
 }
 .fadeOut{
+/*Manipulations stuff*/
     animation: fadeOut 2s forwards;
 }
 

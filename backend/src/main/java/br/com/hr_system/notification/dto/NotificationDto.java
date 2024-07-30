@@ -10,6 +10,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.modelmapper.ModelMapper;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Getter @Setter
@@ -32,4 +34,6 @@ public class NotificationDto {
     @JsonProperty("to-users")
     private List<Long> users;
 
+    @JsonIgnore
+    private LocalDateTime createdDate = LocalDateTime.now();
 }

@@ -1,0 +1,2 @@
+CREATE VIEW VW_USER_SIMPLE AS
+    SELECT  u.id, u.name FROM TB_USER u;

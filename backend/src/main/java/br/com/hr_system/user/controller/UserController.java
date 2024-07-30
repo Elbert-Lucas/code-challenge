@@ -5,6 +5,7 @@ import br.com.hr_system.user.dto.PasswordUpdateDto;
 import br.com.hr_system.user.dto.RegisterUserDto;
 import br.com.hr_system.shared.dto.abstracts.MessageResponseDTO;
 import br.com.hr_system.user.service.UserUpdatesService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ public class UserController {
         this.userUpdatesService = userUpdatesService;
     }
 
+    @RolesAllowed({"ROLE_OWNER", "ROLE_ADMIN"})
     @PutMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MessageResponseDTO> registerUser(@RequestBody @Valid RegisterUserDto registerUserDto){
         log.debug("Iniciando registro de usuario");

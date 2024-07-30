@@ -17,12 +17,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketSession;
-import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.handler.WebSocketHandlerDecorator;
 import org.springframework.web.socket.handler.WebSocketHandlerDecoratorFactory;
 import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -51,8 +51,8 @@ public class WebSocketInterceptor  extends DefaultHandshakeHandler implements We
         if(messageType.equals(SimpMessageType.CONNECT)) {
             authenticateConnection(accessor);
             sessionService.saveSession(this.sessionId, String.valueOf(this.user.getId()));
+            this.setRolesOnSession(accessor);
         }
-
         return message;
     }
 
@@ -62,7 +62,9 @@ public class WebSocketInterceptor  extends DefaultHandshakeHandler implements We
                 .substring(7);
         user = userDetailsService.findUserByToken(jwt);
         jwtUtil.validateToken(jwt, user);
-
+    }
+    private void setRolesOnSession(StompHeaderAccessor accessor){
+        accessor.getSessionAttributes().put("role", "ROLE_"+this.user.getRole());
     }
     @Override
     protected Principal determineUser(ServerHttpRequest request,

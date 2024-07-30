@@ -6,9 +6,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -34,8 +38,11 @@ public class AuthenticationService {
         return new UsernamePasswordAuthenticationToken(
                 user,
             null,
-            null
+                this.getAuthoritiesOfUser(user)
         );
+    }
+    private List<GrantedAuthority> getAuthoritiesOfUser(LoggedUserDetails loggedUser){
+        return List.of(new SimpleGrantedAuthority("ROLE_"+loggedUser.getRole()));
     }
     private void saveUserOnRequestContext(LoggedUserDetails loggedUser){
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();

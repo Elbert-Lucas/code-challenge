@@ -5,6 +5,7 @@ import br.com.hr_system.post.dto.CreatePostDto;
 import br.com.hr_system.post.dto.PostResponseDto;
 import br.com.hr_system.post.service.PostService;
 import br.com.hr_system.shared.dto.CreatedMessageResponseDTO;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +29,7 @@ public class PostController {
         return new ResponseEntity<>(postService.getPosts(pageable), HttpStatus.OK);
     }
 
+    @RolesAllowed({"ROLE_OWNER" })
     @PostMapping
     public ResponseEntity<CreatedMessageResponseDTO> createPost(@RequestBody CreatePostDto postDto){
         return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);

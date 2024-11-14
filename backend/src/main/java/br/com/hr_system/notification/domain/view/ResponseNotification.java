@@ -1,7 +1,5 @@
 package br.com.hr_system.notification.domain.view;
 
-import br.com.hr_system.notification.dto.ResponseView;
-import br.com.hr_system.user.domain.view.LoggedUserDetails;
 import br.com.hr_system.user.domain.view.SimpleUserDetails;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -21,29 +19,24 @@ import java.util.List;
 public class ResponseNotification {
 
     @Id
-    @JsonView({ResponseView.Sent.class, ResponseView.Receive.class})
     private Integer id;
 
     @Column
-    @JsonView({ResponseView.Sent.class, ResponseView.Receive.class})
     private String title;
 
     @Column
-    @JsonView({ResponseView.Sent.class, ResponseView.Receive.class})
     private String message;
 
     @Column(name = "created_dth", updatable = false)
     @CreatedDate
-    @JsonView({ResponseView.Sent.class, ResponseView.Receive.class})
     private LocalDateTime createdDate;
 
     @ManyToOne
     @JoinColumn(name="from_user_id", nullable=false)
-    @JsonView({ResponseView.Sent.class, ResponseView.Receive.class})
     private SimpleUserDetails from;
 
     @Column
-    @JsonView({ResponseView.Sent.class})
+    @JsonView({Sent.class})
     private Boolean toAll;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -51,7 +44,9 @@ public class ResponseNotification {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "notification_id"))
     @JsonManagedReference
-    @JsonView({ResponseView.Sent.class})
+    @JsonView({Sent.class})
     private List<SimpleUserDetails> to;
 
+    public interface Sent{};
+    public interface Receive{};
 }

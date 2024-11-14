@@ -51,7 +51,7 @@ public class WebSocketInterceptor  extends DefaultHandshakeHandler implements We
         if(messageType.equals(SimpMessageType.CONNECT)) {
             authenticateConnection(accessor);
             sessionService.saveSession(this.sessionId, String.valueOf(this.user.getId()));
-            this.setRolesOnSession(accessor);
+            setRolesOnSession(accessor);
         }
         return message;
     }

@@ -1,6 +1,7 @@
 package br.com.hr_system.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +19,7 @@ public class Address implements Serializable {
 
     @OneToOne(mappedBy = "address")
     @JsonIgnore
+    @JsonManagedReference
     private User user;
 
     @Column

@@ -26,7 +26,7 @@ public class UserController {
         this.userUpdatesService = userUpdatesService;
     }
 
-    @RolesAllowed({"ROLE_OWNER", "ROLE_ADMIN"})
+//    @RolesAllowed({"ROLE_OWNER", "ROLE_SUPER_ADMIN", "ROLE_ADMIN"})
     @PutMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MessageResponseDTO> registerUser(@RequestBody @Valid RegisterUserDto registerUserDto){
         log.debug("Iniciando registro de usuario");

@@ -8,8 +8,6 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import static org.springframework.data.web.config.EnableSpringDataWebSupport.PageSerializationMode.VIA_DTO;
 
 @SpringBootApplication
-@EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO)
-@EnableJpaAuditing
 public class HrSystemApplication {
 
 	public static void main(String[] args) {

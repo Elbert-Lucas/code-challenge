@@ -2,11 +2,9 @@ package br.com.hr_system.notification.controller;
 
 import br.com.hr_system.notification.domain.view.ResponseNotification;
 import br.com.hr_system.notification.dto.NotificationDto;
-import br.com.hr_system.notification.dto.ResponseView;
 import br.com.hr_system.notification.service.NotificationSaveService;
 import br.com.hr_system.user.enums.UserRole;
 import com.fasterxml.jackson.annotation.JsonView;
-import jakarta.annotation.security.RolesAllowed;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -15,7 +13,6 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 
-import java.security.Principal;
 import java.util.List;
 
 @Slf4j
@@ -35,7 +32,7 @@ public class NotificationWsController {
 
     @MessageMapping("/notification/post")
     @SendTo("/notification/receive")
-    @JsonView(ResponseView.Receive.class)
+    @JsonView(ResponseNotification.Receive.class)
     public ResponseNotification postNotification(@Payload NotificationDto notification,
                                                  SimpMessageHeaderAccessor headerAccessor) throws IllegalAccessException {
         if(!ALLOWED_ROLES.contains(headerAccessor.getSessionAttributes().get("role"))) throw new IllegalAccessException();

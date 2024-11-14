@@ -3,6 +3,7 @@ package br.com.hr_system.config.security;
 import br.com.hr_system.config.security.exception.InvalidTokenException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     public JwtAuthenticationFilter(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
-    private final List<String> PERMITTED_ENDPOINTS = List.of("/login","/refresh-token", "/connect");
+    private final List<String> PERMITTED_ENDPOINTS = List.of("/login","/refresh-token","/connect", "/user/register");
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
